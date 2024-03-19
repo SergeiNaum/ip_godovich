@@ -21,7 +21,8 @@ class RatingSerializer(serializers.ModelSerializer):
         created: bool
 
         rating, created = Rating.objects.get_or_create(
-            comic=validated_data['comic'], user=self.context['request'].user, defaults={'value': validated_data['value']}
+            comic=validated_data['comic'], user=self.context['request'].user,
+            defaults={'value': validated_data['value']}
         )
         if not created:
             raise serializers.ValidationError("Вы уже голосовали за этот комикс!")
