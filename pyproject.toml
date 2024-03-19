@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "ip-godonovich"
+name = "ip-godovich"
 version = "0.1.0"
 description = "rating system for comics"
 authors = ["SergeiNaum <sergei.naumencko@yandex.ru>"]
