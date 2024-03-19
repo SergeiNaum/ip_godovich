@@ -14,6 +14,9 @@ services:
     restart: always
     env_file:
       - docker/env/.env
+    volumes:
+      - static:/app/static
+      - media:/app/media
     depends_on:
       - database
     command: sh -c "poetry run python manage.py collectstatic --no-input &&
@@ -39,7 +42,7 @@ services:
 
   database:
     image: postgres
-    container_name: postgres
+    container_name: postgres_ip_godovich
     restart: always
     ports:
       - 5433:5432

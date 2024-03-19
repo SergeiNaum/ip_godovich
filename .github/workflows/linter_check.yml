@@ -7,10 +7,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v2
 
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v2
       with:
         python-version: '3.11.4'
 
@@ -18,11 +18,11 @@ jobs:
       run: pip install flake8
 
     - name: Run Flake8
-      run: flake8 rating
+      run: flake8 rating || echo "linting failed" > linting_status.txt
 
     - name: Check Flake8 status
       run: |
-        if [ ${{ success() }} == "false" ]; then
+        if [ -f linting_status.txt ]; then
           echo "Проверка линтинга не удалась."
           exit 1
         fi
