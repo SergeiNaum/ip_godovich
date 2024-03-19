@@ -1,4 +1,4 @@
-celery_worker_start:
-	celery -A config worker --loglevel=info
+tests:
+	./manage.py test .
 
 

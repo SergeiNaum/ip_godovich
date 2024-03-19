@@ -1,7 +1,7 @@
-from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
+from .views import RatingCreateView, ComicRatingView
 
 urlpatterns = [
-    # path('ratings/', )
-
+    path('ratings/', RatingCreateView.as_view()),
+    path('comics/<int:comic_id>/rating/', ComicRatingView.as_view()),
 ]
