@@ -34,6 +34,10 @@ class RatingCreateView(generics.CreateAPIView):
             return Response({"errors": e.detail}, status=status.HTTP_400_BAD_REQUEST)
 
 
+@extend_schema(
+    tags=["comics"],
+    summary="get rating for comic book",
+)
 class ComicRatingView(APIView):
     serializer_class = ComicSerializer
 

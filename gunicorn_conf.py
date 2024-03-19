@@ -3,7 +3,7 @@
 #
 # workers = multiprocessing.cpu_count() * 2 + 1
 workers = 1
-bind = "0.0.0.0:8000"
+bind = "0.0.0.0:9000"
 worker_class = "gthread"
 accesslog = "-"  # Disable access to logging (it will be in stdout/stderr)
 errorlog = "-"  # Disable logging error (it will also be in stdout/stderr)

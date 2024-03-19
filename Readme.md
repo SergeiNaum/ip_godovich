@@ -1,12 +1,12 @@
 [![Lint Code](https://github.com/SergeiNaum/Stakewolle/actions/workflows/linter_check.yml/badge.svg)](https://github.com/SergeiNaum/Stakewolle/actions/workflows/linter_check.yml)
 # Test task for the company ip_godovich
-# **Api_Refs[rating](rating)** Api for working rating system. Created with DRF, redis
+# **rating** Api for working with comic book rating system. Created with DRF
 
 
 ## Quick start
 
 ### For your convenience, the application is deployed on my private server at:
-#### --> [CLICK FOR TEST HERE](http://77.222.53.154:8000/api/schema/swagger-ui/) <--
+#### --> [CLICK FOR TEST HERE](http://77.222.53.154:9000/api/schema/swagger-ui/) <--
   
 #### Or you can deploy the project locally by following these instructions:
 

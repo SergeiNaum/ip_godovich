@@ -9,35 +9,33 @@ networks:
 
 services:
   django:
-    image: sergeynaum/stakewolle:latest
-    container_name: api_refs
+    image: sergeynaum/ip_godovich:latest
+    container_name: rating
     restart: always
     env_file:
       - docker/env/.env
     depends_on:
       - database
-      - redis
     command: sh -c "poetry run python manage.py collectstatic --no-input &&
               poetry run python manage.py migrate &&
-              poetry run gunicorn -c gunicorn_conf.py config.wsgi"
+              poetry run gunicorn -c gunicorn_conf.py conf.wsgi"
 
   nginx:
-    container_name: nginx
+    container_name: nginx_rating
     working_dir: /app
     image: nginx:stable-alpine
     restart: always
     ports:
-      - 8000:8000
+      - 9000:9000
     volumes:
       - static:/app/static
       - media:/app/media
       - ./docker/nginx/:/etc/nginx/conf.d:ro
     links:
       - django
-      - celery
     depends_on:
       - django
-      - celery
+
 
   database:
     image: postgres
@@ -49,25 +47,3 @@ services:
       - docker/env/.env
     volumes:
       - data:/var/lib/postgresql/data/
-
-  celery:
-    image: sergeynaum/stakewolle:latest
-    container_name: celery
-    restart: always
-    env_file:
-      - docker/env/.env
-    links:
-      - django
-    depends_on:
-      - database
-      - django
-      - redis
-    command: sh -c "celery -A config worker --loglevel=info"
-
-
-  redis:
-    image: redis:alpine
-    container_name: redis
-    restart: always
-    ports:
-      - 6379:6379
