@@ -1,5 +1,7 @@
 from typing import Any
 
+from django.conf import settings
+from django.core.cache import cache
 from drf_spectacular.utils import extend_schema
 from rest_framework.generics import get_object_or_404
 from rest_framework import generics, status, serializers
@@ -42,6 +44,14 @@ class ComicRatingView(APIView):
     serializer_class = ComicSerializer
 
     def get(self, request, comic_id):
-        comic = get_object_or_404(Comic, id=comic_id)
+
+        cache_key = f"{settings.RATING_CACHE_NAME}{comic_id}"
+        rating_chache = cache.get(cache_key)
+        if not rating_chache:
+            comic = get_object_or_404(Comic, id=comic_id)
+            cache.set(cache_key, comic,  500)
+
+        else:
+            comic = rating_chache
         serializer = ComicSerializer(comic)
         return Response({'rating': serializer.data['rating']})

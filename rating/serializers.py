@@ -1,6 +1,8 @@
 import decimal
 
+from django.conf import settings
 from django.contrib.auth.models import User
+from django.core.cache import cache
 from rest_framework import serializers
 
 
@@ -20,8 +22,12 @@ class RatingSerializer(serializers.ModelSerializer):
         rating: Rating
         created: bool
 
+        comic = validated_data['comic']
+        cache_key = f"{settings.RATING_CACHE_NAME}{comic.id}"
+        cache.delete(cache_key)
+
         rating, created = Rating.objects.get_or_create(
-            comic=validated_data['comic'], user=self.context['request'].user,
+            comic=comic, user=self.context['request'].user,
             defaults={'value': validated_data['value']}
         )
         if not created:
